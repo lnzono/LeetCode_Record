@@ -43,24 +43,23 @@ public:
     public:
         vector<int> preorderTraversal(TreeNode *root)
         {
-            vector<int> vet;
-            stack<TreeNode *> st;
-            while (root || !st.empty())
+            // 非递归方法
+            if (root == nullptr)
+                return {};
+            vector<int> arr;
+            stack<TreeNode *> sta; //  设置栈对象
+            sta.push(root);        //  保存根节点
+            while (!sta.empty())
             {
-                if (root)
-                {
-                    st.push(root);
-                    vet.push_back(root->val);
-                    root = root->left;
-                }
-                else
-                {
-                    root = st.top();
-                    st.pop();
-                    root = root->right;
-                }
+                TreeNode *node = sta.top();
+                sta.pop();
+                arr.push_back(node->val); //  存入容器
+                if (node->right)
+                    sta.push(node->right);
+                if (node->left)
+                    sta.push(node->left);
             }
-            return vet;
+            return arr;
         }
     };
 };
